@@ -1,0 +1,9 @@
+[
+  {
+    "id": "personal-cv-academic-score",
+    "title": "Personal CV & Academic Score App",
+    "category": "Academic Project",
+    "description": "Aplikasi CV online dengan profil mahasiswa, daftar skills dinamis, dashboard akademik, dan formulir kontak.",
+    "technologies": ["React Native", "Expo", "TypeScript"]
+  }
+]

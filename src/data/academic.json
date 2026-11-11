@@ -1,0 +1,35 @@
+{
+  "student": {
+    "name": "Rasyaa Nabilah",
+    "nim": "242505035"
+  },
+  "course": "Pemrograman Mobile 2",
+  "instructor": "Iin, M.Kom",
+  "currentScore": {
+    "value": 89,
+    "grade": "A"
+  },
+  "learningPoints": 12375,
+  "learningProgress": [
+    {
+      "id": "attendance",
+      "label": "Attendance",
+      "percentage": 100
+    },
+    {
+      "id": "practice",
+      "label": "Practice",
+      "percentage": 87
+    },
+    {
+      "id": "quest",
+      "label": "Quest",
+      "percentage": 95
+    },
+    {
+      "id": "challenge",
+      "label": "Challenge",
+      "percentage": 100
+    }
+  ]
+}
