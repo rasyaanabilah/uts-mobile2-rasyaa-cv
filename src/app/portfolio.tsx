@@ -1,14 +1,49 @@
 import React from "react";
-import { FlatList, Text, View, useWindowDimensions } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import EmptyState from "../components/EmptyState";
 import PortfolioCard from "../components/PortfolioCard";
 import ScreenBackground from "../components/ScreenBackground";
 import { portfolio } from "../data/appData";
+import type { PortfolioProject } from "../data/portfolioTypes";
 import styles from "../styles/pageStyles";
+import portfolioStyles from "../styles/portfolioStyles";
+
+const PORTFOLIO_VIEWABILITY_CONFIG: NonNullable<
+  React.ComponentProps<typeof FlatList<PortfolioProject>>["viewabilityConfig"]
+> = {
+  itemVisiblePercentThreshold: 20,
+};
 
 export default function PortfolioScreen() {
   const { width } = useWindowDimensions();
-  const columns = width >= 1000 ? 3 : width >= 650 ? 2 : 1;
+  const columns = width >= 650 ? 2 : 1;
+  const [visibleProjectIds, setVisibleProjectIds] = React.useState<Set<string>>(
+    () => new Set(),
+  );
+  const onViewableItemsChanged = React.useRef<
+    NonNullable<
+      React.ComponentProps<
+        typeof FlatList<PortfolioProject>
+      >["onViewableItemsChanged"]
+    >
+  >(
+    ({ viewableItems }) => {
+      setVisibleProjectIds((currentIds) => {
+        const nextIds = new Set(currentIds);
+        viewableItems.forEach(({ item }) => {
+          if (item) {
+            nextIds.add(item.id);
+          }
+        });
+        return nextIds;
+      });
+    },
+  ).current;
 
   return (
     <ScreenBackground>
@@ -19,8 +54,16 @@ export default function PortfolioScreen() {
         data={portfolio}
         numColumns={columns}
         keyExtractor={(project) => project.id}
-        renderItem={({ item }) => (
-          <PortfolioCard project={item} columns={columns} />
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={PORTFOLIO_VIEWABILITY_CONFIG}
+        renderItem={({ item, index }) => (
+          <PortfolioCard
+            project={item}
+            columns={columns}
+            isVisible={visibleProjectIds.has(item.id)}
+            animationDelay={(index % columns) * 90}
+            enableHoverEffects
+          />
         )}
         ListEmptyComponent={
           <EmptyState
@@ -34,10 +77,13 @@ export default function PortfolioScreen() {
         ListHeaderComponent={
           <View style={styles.pageInner}>
             <View style={styles.pageHeading}>
-              <Text style={styles.eyebrow}>SELECTED WORK</Text>
-              <Text style={styles.pageTitle}>Portfolio</Text>
+              <Text style={styles.eyebrow}>SELECTED WORKS</Text>
+              <Text style={styles.pageTitle}>My Projects</Text>
               <Text style={styles.pageDescription}>
-                Academic project information from local portfolio data.
+                A collection of my academic and personal projects
+              </Text>
+              <Text style={portfolioStyles.projectCount}>
+                {portfolio.length.toString().padStart(2, "0")} PROJECTS
               </Text>
             </View>
           </View>

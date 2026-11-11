@@ -1,9 +1,52 @@
 [
   {
+    "id": "website-portofolio",
+    "number": "01",
+    "title": "Website Portofolio",
+    "category": "Personal Project",
+    "description": "Website portofolio untuk menampilkan profil, informasi diri, dan karya.",
+    "technologies": [],
+    "url": "https://portopolio13-dn5njb2q1-rasyaanabilahs-projects.vercel.app/",
+    "thumbnailAccent": "#34D399"
+  },
+  {
+    "id": "website-ucapan-hbd",
+    "number": "02",
+    "title": "Website Ucapan HBD",
+    "category": "Creative Web Project",
+    "description": "Website ucapan ulang tahun digital dengan konsep kreatif dan interaktif.",
+    "technologies": [],
+    "url": "https://hbd-karena-31v4j3xgw-rasyaanabilahs-projects.vercel.app/",
+    "thumbnailAccent": "#A78BFA"
+  },
+  {
+    "id": "magika",
+    "number": "03",
+    "title": "MAGIKA (Magang Digital)",
+    "category": "Academic Project",
+    "description": "Portal administrasi pendaftaran magang di Kecamatan Cicalengka.",
+    "technologies": [],
+    "url": "https://magika-kecamatancicalengka.vercel.app/",
+    "thumbnailAccent": "#38BDF8"
+  },
+  {
+    "id": "bakery-delight-e-commerce",
+    "number": "04",
+    "title": "Bakery Delight E-Commerce",
+    "category": "Web Development",
+    "description": "Website e-commerce bertema bakery untuk menampilkan produk dan pengalaman belanja online.",
+    "technologies": [],
+    "url": "https://bakery-delight06-l8vc4avzg-rasyaanabilahs-projects.vercel.app/",
+    "thumbnailAccent": "#FBBF24"
+  },
+  {
     "id": "personal-cv-academic-score",
+    "number": "05",
     "title": "Personal CV & Academic Score App",
     "category": "Academic Project",
     "description": "Aplikasi CV online dengan profil mahasiswa, daftar skills dinamis, dashboard akademik, dan formulir kontak.",
-    "technologies": ["React Native", "Expo", "TypeScript"]
+    "technologies": ["React Native", "Expo", "TypeScript"],
+    "url": null,
+    "thumbnailAccent": "#10B981"
   }
 ]
