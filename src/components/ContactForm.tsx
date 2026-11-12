@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import {
+  Platform,
   Pressable,
   Text,
   TextInput,
   View,
 } from "react-native";
+import * as Linking from "expo-linking";
 import styles from "../styles/contactStyles";
 import {
   validateContactValues,
@@ -28,6 +30,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<ContactErrors>({});
   const [feedbackStatus, setFeedbackStatus] =
     useState<FeedbackStatus>("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const updateField = (field: ContactField, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -43,15 +46,45 @@ export default function ContactForm() {
     setFeedbackStatus("idle");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const nextErrors = validateContactValues(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
       setFeedbackStatus("error");
+      setFeedbackMessage("Periksa kembali data yang ditandai sebelum mengirim.");
       return;
     }
 
-    setFeedbackStatus("success");
+    const subject = "Pesan dari formulir kontak";
+    const body = [
+      `Nama: ${values.name.trim()}`,
+      `Email: ${values.email.trim()}`,
+      "",
+      values.message.trim(),
+    ].join("\n");
+    const emailUrl =
+      Platform.OS === "web"
+        ? `https://mail.google.com/mail/?view=cm&fs=1&to=nlabilahrasyaa%40gmail.com` +
+          `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+        : `mailto:nlabilahrasyaa@gmail.com?subject=${encodeURIComponent(subject)}` +
+          `&body=${encodeURIComponent(body)}`;
+
+    try {
+      await Linking.openURL(emailUrl);
+      setFeedbackStatus("success");
+      setFeedbackMessage(
+        Platform.OS === "web"
+          ? "Halaman tulis email Gmail dibuka. Tinjau pesan lalu tekan Kirim di Gmail."
+          : "Aplikasi email terbuka dengan pesan ini. Tekan Kirim di aplikasi email untuk mengirimnya.",
+      );
+    } catch {
+      setFeedbackStatus("error");
+      setFeedbackMessage(
+        Platform.OS === "web"
+          ? "Gmail tidak dapat dibuka. Periksa koneksi internet atau coba masuk ke akun Gmail di browser."
+          : "Aplikasi email tidak dapat dibuka. Pastikan perangkat memiliki aplikasi email yang tersedia.",
+      );
+    }
   };
 
   return (
@@ -59,7 +92,8 @@ export default function ContactForm() {
       <Text style={styles.eyebrow}>LET&apos;S CONNECT</Text>
       <Text style={styles.title}>Contact Me</Text>
       <Text style={styles.description}>
-        Punya pertanyaan atau ingin berkolaborasi? Kirim pesan melalui formulir ini.
+        Punya pertanyaan atau ingin berkolaborasi? Isi formulir ini untuk membuka
+        aplikasi email dan menyiapkan pesan untuk saya.
       </Text>
 
       <View style={styles.field}>
@@ -139,8 +173,8 @@ export default function ContactForm() {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="Kirim pesan"
-        accessibilityHint="Memvalidasi formulir kontak. Pesan tidak dikirim ke server."
-        onPress={handleSubmit}
+        accessibilityHint="Membuka aplikasi email dengan pesan yang ditujukan ke nlabilahrasyaa@gmail.com."
+        onPress={() => void handleSubmit()}
         style={({ pressed }) => [
           styles.submitButton,
           pressed && styles.submitButtonPressed,
@@ -158,9 +192,7 @@ export default function ContactForm() {
             feedbackStatus === "error" && styles.error,
           ]}
         >
-          {feedbackStatus === "error"
-            ? "Periksa kembali data yang ditandai sebelum mengirim."
-            : "Pesan berhasil diproses secara lokal. Formulir ini belum mengirim data ke server."}
+          {feedbackMessage}
         </Text>
       ) : null}
     </View>
