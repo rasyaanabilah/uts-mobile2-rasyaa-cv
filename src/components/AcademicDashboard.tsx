@@ -7,10 +7,12 @@ import styles from "../styles/academicStyles";
 
 type AcademicDashboardProps = {
   data: AcademicData | null;
+  embedded?: boolean;
 };
 
 export default function AcademicDashboard({
   data,
+  embedded = false,
 }: AcademicDashboardProps) {
   const { width: windowWidth } = useWindowDimensions();
   const progressCardWidth: "100%" | "48%" | "23%" =
@@ -23,7 +25,7 @@ export default function AcademicDashboard({
     !Array.isArray(data.learningProgress)
   ) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, embedded && { marginTop: 0 }]}>
         <EmptyState
           title="Data akademik belum tersedia"
           description="Informasi nilai belum dapat ditampilkan. Silakan periksa kembali data akademik lokal."
@@ -33,7 +35,7 @@ export default function AcademicDashboard({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, embedded && { marginTop: 0 }]}>
       <View style={styles.sectionHeading}>
         <Text style={styles.eyebrow}>ACADEMIC OVERVIEW</Text>
         <Text style={styles.title}>My Score</Text>

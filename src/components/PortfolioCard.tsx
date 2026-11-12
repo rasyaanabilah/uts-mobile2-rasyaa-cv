@@ -1,5 +1,12 @@
 import React from "react";
-import { Animated, Linking, Pressable, Text, View } from "react-native";
+import {
+  Animated,
+  Linking,
+  Pressable,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import type { PortfolioProject } from "../data/portfolioTypes";
 import styles from "../styles/portfolioStyles";
 
@@ -18,6 +25,7 @@ export default function PortfolioCard({
   animationDelay = 0,
   enableHoverEffects = false,
 }: PortfolioCardProps) {
+  const { width } = useWindowDimensions();
   const [hovered, setHovered] = React.useState(false);
   const [buttonHovered, setButtonHovered] = React.useState(false);
   const reveal = React.useRef(
@@ -96,6 +104,10 @@ export default function PortfolioCard({
         <View
           style={[
             styles.thumbnail,
+            width < 600 && {
+              height: 136,
+              padding: width < 360 ? 12 : 14,
+            },
             { borderColor: `${project.thumbnailAccent}66` },
           ]}
         >
@@ -106,7 +118,14 @@ export default function PortfolioCard({
             ]}
           />
           <Text style={styles.thumbnailNumber}>PROJECT {project.number}</Text>
-          <Text style={styles.thumbnailTitle}>{project.title}</Text>
+          <Text
+            style={[
+              styles.thumbnailTitle,
+              width < 600 && { fontSize: width < 360 ? 16 : 17 },
+            ]}
+          >
+            {project.title}
+          </Text>
           <View style={styles.thumbnailArtwork}>
             <View
               style={[
@@ -123,7 +142,12 @@ export default function PortfolioCard({
             <View style={styles.artworkLineShort} />
           </View>
         </View>
-        <View style={styles.cardContent}>
+        <View
+          style={[
+            styles.cardContent,
+            width < 600 && { padding: width < 360 ? 14 : 16 },
+          ]}
+        >
           <View style={styles.cardMeta}>
             <Text style={styles.projectNumber}>/{project.number}</Text>
             <Text style={styles.category}>{project.category}</Text>

@@ -44,6 +44,10 @@ export default function HomeScreen() {
   const contentWidth = Math.min(width - horizontalPadding * 2, 1100);
   const columns = width >= 1000 ? 3 : width >= 650 ? 2 : 1;
   const gridItemWidth = columns === 1 ? "100%" : columns === 2 ? "48%" : "31%";
+  const sectionStyle = [
+    styles.section,
+    { paddingVertical: width < 600 ? 40 : 64 },
+  ];
 
   const handleSectionLayout = useCallback(
     (section: SectionId) => (event: LayoutChangeEvent) => {
@@ -103,7 +107,7 @@ export default function HomeScreen() {
             style={[
               styles.section,
               styles.homeSection,
-              { minHeight: height },
+              { minHeight: height, paddingVertical: width < 600 ? 40 : 48 },
             ]}
           >
             <View
@@ -140,7 +144,7 @@ export default function HomeScreen() {
 
           <View
             onLayout={handleSectionLayout("about")}
-            style={styles.section}
+            style={sectionStyle}
           >
             <View style={styles.sectionInner}>
               <AboutProfile />
@@ -149,7 +153,7 @@ export default function HomeScreen() {
 
           <View
             onLayout={handleSectionLayout("skills")}
-            style={styles.section}
+            style={sectionStyle}
           >
             <View style={styles.sectionInner}>
               <View style={pageStyles.pageHeading}>
@@ -186,7 +190,7 @@ export default function HomeScreen() {
 
           <View
             onLayout={handleSectionLayout("portfolio")}
-            style={styles.section}
+            style={sectionStyle}
           >
             <View style={styles.sectionInner}>
               <View style={pageStyles.pageHeading}>
@@ -223,19 +227,19 @@ export default function HomeScreen() {
 
           <View
             onLayout={handleSectionLayout("score")}
-            style={styles.section}
+            style={sectionStyle}
           >
             <View style={styles.sectionInner}>
-              <AcademicDashboard data={academicData} />
+              <AcademicDashboard data={academicData} embedded />
             </View>
           </View>
 
           <View
             onLayout={handleSectionLayout("contact")}
-            style={styles.section}
+            style={sectionStyle}
           >
             <View style={styles.sectionInner}>
-              <ContactForm />
+              <ContactForm embedded />
             </View>
           </View>
         </ScrollView>

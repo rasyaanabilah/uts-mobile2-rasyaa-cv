@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     columnGap: 16,
+    rowGap: 18,
   },
 
   navigation: {

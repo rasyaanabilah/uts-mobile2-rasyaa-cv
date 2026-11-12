@@ -25,7 +25,11 @@ const EMPTY_VALUES: ContactValues = {
   message: "",
 };
 
-export default function ContactForm() {
+type ContactFormProps = {
+  embedded?: boolean;
+};
+
+export default function ContactForm({ embedded = false }: ContactFormProps) {
   const [values, setValues] = useState<ContactValues>(EMPTY_VALUES);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [feedbackStatus, setFeedbackStatus] =
@@ -88,7 +92,7 @@ export default function ContactForm() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, embedded && { marginTop: 0 }]}>
       <Text style={styles.eyebrow}>LET&apos;S CONNECT</Text>
       <Text style={styles.title}>Contact Me</Text>
       <Text style={styles.description}>

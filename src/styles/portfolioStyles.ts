@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    flex: 1,
-    marginBottom: 18,
     overflow: "hidden",
     borderWidth: 1,
     borderColor: "rgba(16,185,129,0.38)",
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   cardAnimated: {
-    flex: 1,
+    width: "100%",
   },
 
   singleColumnCard: {
@@ -133,6 +131,7 @@ const styles = StyleSheet.create({
   },
 
   category: {
+    flexShrink: 1,
     color: ACCENT,
     fontSize: 10,
     fontWeight: "800",
